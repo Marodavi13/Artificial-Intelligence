@@ -20,6 +20,7 @@ void Character::OnStart()
 {
     ReadParams("params.xml", mParams);
 	mSeekSteering = new CSeekSteering();
+//	mSeekArrive = new CSeekArrive();
 }
 
 void Character::OnStop()
@@ -31,16 +32,10 @@ void Character::OnUpdate(float step)
 {
 	USVec2D velocity = GetLinearVelocity();
 
-	USVec2D acceleration = mSeekSteering->getSteering(this, mParams.targetPosition);
+	USVec2D acceleration = mSeekSteering->getSteering(this, mParams);
 
-	
-	
 	SetLinearVelocity(velocity.mX + acceleration.mX * step, velocity.mY + acceleration.mY * step);
 
-	if (velocity.Length() > mParams.max_velocity) {
-		velocity = velocity / velocity.Length() * mParams.max_velocity;
-		acceleration = USVec2D(0.0, 0.0);
-	}
 	
 	USVec2D position = USVec2D(GetLoc().mX, GetLoc().mY);
 	position += velocity * step;

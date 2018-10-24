@@ -18,6 +18,7 @@
     <ClCompile Include="params.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="CSeekSteering.cpp" />
+    <ClCompile Include="CSeekArrive.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gameConfig.h" />
@@ -34,6 +35,7 @@
     <ClInclude Include="params.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="CSeekSteering.h" />
+    <ClInclude Include="CSeekArrive.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="host">

@@ -5,15 +5,17 @@
 
 
 
-USVec2D CSeekSteering::getSteering(Character* character, USVec2D target)
+USVec2D CSeekSteering::getSteering(Character* character, Params params)
 {
 	mLocation = character->GetLoc();
-	mSpeed = target - mLocation;
-	
+	mSpeed = params.targetPosition - mLocation;
+	if (mSpeed.Length() > params.max_velocity) {
+		mSpeed = mSpeed / mSpeed.Length() * params.max_velocity;
+	}
 	mAcceleration = mSpeed - character->GetLinearVelocity();
 	
-	if (mAcceleration.Length() > character->getMaxAcceleration()) {
-		mAcceleration = mAcceleration / mAcceleration.Length() * character->getMaxAcceleration();
+	if (mAcceleration.Length() > params.max_acceleration) {
+		mAcceleration = mAcceleration / mAcceleration.Length() * params.max_acceleration;
 	}
 	printf("Acceleration: %f , %f \n", mAcceleration.mX,mAcceleration.mY);
 

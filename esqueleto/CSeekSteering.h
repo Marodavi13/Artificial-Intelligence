@@ -1,6 +1,9 @@
 #pragma once
+#ifndef CHARACTER
 #include "character.h"
-#include "uslscore\USVec2D.h"
+#endif // !CHARACTER
+
+
 
 
 class Character;
@@ -11,7 +14,7 @@ public:
 	CSeekSteering();
 	~CSeekSteering();
 
-	USVec2D getSteering(Character* character,  USVec2D target);
+	USVec2D getSteering(Character* character,  Params params);
 	void DrawDebug();
 
 	
