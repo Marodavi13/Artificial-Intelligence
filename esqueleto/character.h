@@ -30,14 +30,14 @@ public:
 
 	USVec2D GetLinearVelocity()		const { return mLinearVelocity;}
 	float GetAngularVelocity()		const { return mAngularVelocity;}
-	float GetMaxAcceleration()		const { return mParams->max_acceleration; }
-	float GetMaxSpeed()				const { return mParams->max_velocity; }
+	float GetMaxAcceleration()		const { return mParams.max_acceleration; }
+	float GetMaxSpeed()				const { return mParams.max_velocity; }
 
 
 private:
 	USVec2D			mLinearVelocity;
 	float			mAngularVelocity;
-	Params*			mParams;
+	Params			mParams;
 
 	CSeekSteering*	mSeekSteering;
 	//CSeekArrive* mSeekArrive;

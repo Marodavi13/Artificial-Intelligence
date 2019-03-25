@@ -18,7 +18,7 @@ Character::~Character()
 
 void Character::OnStart()
 {
-    ReadParams("params.xml", *mParams);
+    ReadParams("params.xml", mParams);
 	mSeekSteering = new CSeekSteering();
 //	mSeekArrive = new CSeekArrive();
 }
@@ -33,7 +33,7 @@ void Character::OnUpdate(float step)
 	USVec2D LinearAcceleration(0.f,0.f);
 	float AngularAcceleration = 0.f;
 
-	mSeekSteering->GetSteering(this, mParams, LinearAcceleration, AngularAcceleration);
+	mSeekSteering->GetSteering(this, &mParams, LinearAcceleration, AngularAcceleration);
 
 	SetLinearVelocity(GetLinearVelocity()+ LinearAcceleration * step);
 	
