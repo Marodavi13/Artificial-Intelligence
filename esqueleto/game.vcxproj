@@ -15,7 +15,7 @@
     <RootNamespace>moai</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <ProjectName>game</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -125,9 +125,10 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Steering.cpp" />
     <ClCompile Include="character.cpp" />
-    <ClCompile Include="CSeekArrive.cpp" />
-    <ClCompile Include="CSeekSteering.cpp" />
+    <ClCompile Include="ArriveSteering.cpp" />
+    <ClCompile Include="SeekSteering.cpp" />
     <ClCompile Include="gameConfig.cpp" />
     <ClCompile Include="host\FolderWatcher-win.cpp" />
     <ClCompile Include="host\GlutHost.cpp" />
@@ -139,9 +140,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Steering.h" />
     <ClInclude Include="character.h" />
-    <ClInclude Include="CSeekArrive.h" />
-    <ClInclude Include="CSeekSteering.h" />
+    <ClInclude Include="ArriveSteering.h" />
+    <ClInclude Include="SeekSteering.h" />
     <ClInclude Include="gameConfig.h" />
     <ClInclude Include="host\FolderWatcher-win.h" />
     <ClInclude Include="host\GlutHost.h" />

@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="gameConfig.cpp" />
     <ClCompile Include="host\FolderWatcher-win.cpp">
       <Filter>host</Filter>
     </ClCompile>
@@ -14,14 +13,29 @@
     <ClCompile Include="host\ParticlePresets.cpp">
       <Filter>host</Filter>
     </ClCompile>
-    <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="params.cpp" />
-    <ClCompile Include="character.cpp" />
-    <ClCompile Include="CSeekSteering.cpp" />
-    <ClCompile Include="CSeekArrive.cpp" />
+    <ClCompile Include="character.cpp">
+      <Filter>Basics</Filter>
+    </ClCompile>
+    <ClCompile Include="gameConfig.cpp">
+      <Filter>Basics</Filter>
+    </ClCompile>
+    <ClCompile Include="params.cpp">
+      <Filter>Basics</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Basics</Filter>
+    </ClCompile>
+    <ClCompile Include="Steering.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="SeekSteering.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
+    <ClCompile Include="ArriveSteering.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gameConfig.h" />
     <ClInclude Include="host\FolderWatcher-win.h">
       <Filter>host</Filter>
     </ClInclude>
@@ -31,11 +45,27 @@
     <ClInclude Include="host\ParticlePresets.h">
       <Filter>host</Filter>
     </ClInclude>
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="params.h" />
-    <ClInclude Include="character.h" />
-    <ClInclude Include="CSeekSteering.h" />
-    <ClInclude Include="CSeekArrive.h" />
+    <ClInclude Include="character.h">
+      <Filter>Basics</Filter>
+    </ClInclude>
+    <ClInclude Include="gameConfig.h">
+      <Filter>Basics</Filter>
+    </ClInclude>
+    <ClInclude Include="params.h">
+      <Filter>Basics</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Basics</Filter>
+    </ClInclude>
+    <ClInclude Include="Steering.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="SeekSteering.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="ArriveSteering.h">
+      <Filter>AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="host">
@@ -43,6 +73,12 @@
     </Filter>
     <Filter Include="sample">
       <UniqueIdentifier>{dafee91e-18b1-4dd7-a488-726565484f1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{f1130802-6932-441d-86bd-76022c8f9ef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Basics">
+      <UniqueIdentifier>{fbc5f49a-9c0e-48d9-bb9b-6f7705b96728}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

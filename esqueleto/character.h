@@ -3,9 +3,8 @@
 
 #include <moaicore/MOAIEntity2D.h>
 #include <params.h>
-#include "CSeekSteering.h"
-#include "CSeekArrive.h"
-#include "uslscore\USVec2D.h"
+#include "SeekSteering.h"
+#include "ArriveSteering.h"
 
 #define CHARACTER
 
@@ -26,23 +25,22 @@ public:
 	Character();
 	~Character();
 	
-	void SetLinearVelocity(float x, float y) { mLinearVelocity.mX = x; mLinearVelocity.mY = y;}
-	void SetAngularVelocity(float angle) { mAngularVelocity = angle;}
-	
-	
+	void SetLinearVelocity(USVec2D NewVelocity) { mLinearVelocity  = NewVelocity; }
+	void SetAngularVelocity(float angle)		{ mAngularVelocity = angle;}
 
-	USVec2D GetLinearVelocity() const { return mLinearVelocity;}
-	float GetAngularVelocity() const { return mAngularVelocity;}
-	float getMaxAcceleration() const { return mParams.max_acceleration; }
-	float getMaxSpeed() const { return mParams.max_velocity; }
+	USVec2D GetLinearVelocity()		const { return mLinearVelocity;}
+	float GetAngularVelocity()		const { return mAngularVelocity;}
+	float GetMaxAcceleration()		const { return mParams->max_acceleration; }
+	float GetMaxSpeed()				const { return mParams->max_velocity; }
 
 
 private:
-	USVec2D mLinearVelocity;
-	float mAngularVelocity;
-	CSeekSteering* mSeekSteering;
+	USVec2D			mLinearVelocity;
+	float			mAngularVelocity;
+	Params*			mParams;
+
+	CSeekSteering*	mSeekSteering;
 	//CSeekArrive* mSeekArrive;
-	Params mParams;
 	
 	// Lua configuration
 public:

@@ -1,7 +1,7 @@
 #include <stdafx.h>
 #include "character.h"
 #include <tinyxml.h>
-
+#include "SeekSteering.h"
 
 
 Character::Character() : mLinearVelocity(0.0f, 0.0f), mAngularVelocity(0.0f)
@@ -18,7 +18,7 @@ Character::~Character()
 
 void Character::OnStart()
 {
-    ReadParams("params.xml", mParams);
+    ReadParams("params.xml", *mParams);
 	mSeekSteering = new CSeekSteering();
 //	mSeekArrive = new CSeekArrive();
 }
@@ -30,17 +30,15 @@ void Character::OnStop()
 
 void Character::OnUpdate(float step)
 {
-	USVec2D velocity = GetLinearVelocity();
+	USVec2D LinearAcceleration(0.f,0.f);
+	float AngularAcceleration = 0.f;
 
-	USVec2D acceleration = mSeekSteering->getSteering(this, mParams);
+	mSeekSteering->GetSteering(this, mParams, LinearAcceleration, AngularAcceleration);
 
-	SetLinearVelocity(velocity.mX + acceleration.mX * step, velocity.mY + acceleration.mY * step);
-
+	SetLinearVelocity(GetLinearVelocity()+ LinearAcceleration * step);
 	
-	USVec2D position = USVec2D(GetLoc().mX, GetLoc().mY);
-	position += velocity * step;
-	
-	SetLoc(position);
+	SetLoc(GetLoc() + GetLinearVelocity()  * step);
+	SetRot(GetRot() + GetAngularVelocity() * step);
 }
 
 void Character::DrawDebug()
@@ -73,7 +71,7 @@ int Character::_setLinearVel(lua_State* L)
 	
 	float pX = state.GetValue<float>(2, 0.0f);
 	float pY = state.GetValue<float>(3, 0.0f);
-	self->SetLinearVelocity(pX, pY);
+	self->SetLinearVelocity(USVec2D(pX, pY));
 	return 0;	
 }
 
