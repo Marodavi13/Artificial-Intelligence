@@ -14,6 +14,7 @@ public:
 
 	virtual void GetSteering(Params* params, USVec2D &outLinearAcceleration, float &outAngularAcceleration);
 	virtual void DrawDebug();
+	void Arrive(USVec2D& LinearAcceleration);
 private:
 	USVec2D mDesiredVelocity;
 	USVec2D mDesiredAcceleration;

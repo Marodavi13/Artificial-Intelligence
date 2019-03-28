@@ -4,6 +4,9 @@
 #include <moaicore/MOAIDraw.h>
 #include <moaicore/MOAIEntity2D.h>
 #include "uslscore\USVec2D.h"
+#define RAD2DEG 180.f/PI
+#define SCALEVECTOR(vector,max)	if(IsVectorBiggerThan(vector,max)){vector.NormSafe();vector.Scale(max);}
+#define SCALEFLOAT(number,max)	if(abs(number)> max){number = (signbit(number) * -2.f + 1.f) * max;}
 
 static bool IsVectorBiggerThan(const USVec2D vector, const float otherParam, float* lengthSquared = nullptr)  
 {
@@ -17,4 +20,24 @@ static bool IsVectorBiggerThan(const USVec2D vector, const float otherParam, flo
 	{
 		return vector.LengthSquared() > pow(otherParam, 2);
 	}
+}
+
+static void SetAngleInBounds(float &angle)
+{
+	while(angle > 180.f)
+	{
+		angle -= 360.f;
+	}
+	while(angle < -180.f)
+	{
+		angle += 360.f;
+	}
+}
+static float GetAngle(const USVec2D vector)
+{
+	USVec2D tempVector = vector;
+	tempVector.NormSafe();
+	float angle = ACos(tempVector.Dot(USVec2D(1.0f, 0.f))) * RAD2DEG;
+	SetAngleInBounds(angle);
+	return angle;
 }

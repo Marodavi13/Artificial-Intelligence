@@ -3,7 +3,7 @@
 #include <tinyxml.h>
 #include "SeekSteering.h"
 #include "ArriveSteering.h"
-
+#include "AlignSteering.h"
 Character::Character() : mLinearVelocity(0.0f, 0.0f), mAngularVelocity(0.0f)
 {
 	RTTI_BEGIN
@@ -21,12 +21,14 @@ void Character::OnStart()
     ReadParams("params.xml", mParams);
 	mSeekSteering = new CSeekSteering(this);
 	mArriveSteering = new CArriveSteering(this);
+	mAlignSteering = new CAlignSteering(this);
 }
 
 void Character::OnStop()
 {
 	delete mSeekSteering;
 	delete mArriveSteering;
+	delete mAlignSteering;
 }
 
 void Character::OnUpdate(float step)
@@ -34,15 +36,16 @@ void Character::OnUpdate(float step)
 	USVec2D LinearAcceleration(0.f,0.f);
 	float AngularAcceleration = 0.f;
 
-	mSeekSteering->GetSteering(&mParams, LinearAcceleration, AngularAcceleration);
+	mSeekSteering->GetSteering	(&mParams, LinearAcceleration, AngularAcceleration);
 	mArriveSteering->GetSteering(&mParams, LinearAcceleration, AngularAcceleration);
+	mAlignSteering->GetSteering	(&mParams, LinearAcceleration, AngularAcceleration);
 
-	SetLinearVelocity(GetLinearVelocity()+ LinearAcceleration * step);
-	
+	SetLinearVelocity	(GetLinearVelocity()+ LinearAcceleration * step);
+	SetAngularVelocity	(GetAngularVelocity() + AngularAcceleration * step);
+
 	SetLoc(GetLoc() + GetLinearVelocity()  * step);
 	SetRot(GetRot() + GetAngularVelocity() * step);
-	printf("X: %f, Y: %f", GetLoc().mX, GetLoc().mY);
-	//cout << "X:" + static_cast<int>() /*<< ", Y: " + static_cast<int>(GetLoc().mY)*/ << endl;
+	
 }
 
 void Character::DrawDebug()

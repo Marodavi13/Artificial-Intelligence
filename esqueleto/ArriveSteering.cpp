@@ -35,18 +35,22 @@ void CArriveSteering::GetSteering(Params * params, USVec2D & outLinearAccelerati
 	if (!IsVectorBiggerThan(mDesiredVelocity, params->arrive_radius, &distanceSquared))
 	{
 		bIsArriving = true;
-		//Set desired Velocity
-		mDesiredVelocity.NormSafe();
-		mDesiredVelocity.Scale(mCharacter->GetMaxSpeed());
-		mDesiredVelocity = mDesiredVelocity * Sqrt(distanceSquared) / params->arrive_radius;;
-		//Calculate linear acceleration
-		mDesiredAcceleration = mDesiredVelocity - mCharacter->GetLinearVelocity();
-		if(IsVectorBiggerThan(mDesiredAcceleration,params->max_acceleration))
+		if(distanceSquared < pow(params->dest_radius,2.f))
 		{
-			mDesiredAcceleration.NormSafe();
-			mDesiredAcceleration.Scale(params->max_acceleration);
+			Arrive(outLinearAcceleration);
 		}
-		outLinearAcceleration = mDesiredAcceleration;
+		else
+		{
+			//Set desired Velocity
+			mDesiredVelocity.NormSafe();
+			mDesiredVelocity.Scale(mCharacter->GetMaxSpeed());
+			mDesiredVelocity = mDesiredVelocity * Sqrt(distanceSquared) / params->arrive_radius;;
+			//Calculate linear acceleration
+			mDesiredAcceleration = mDesiredVelocity - mCharacter->GetLinearVelocity();
+			SCALEVECTOR(mDesiredAcceleration, params->max_acceleration)
+			outLinearAcceleration = mDesiredAcceleration;
+		}
+		
 	}
 	else
 	{
@@ -64,4 +68,10 @@ void CArriveSteering::DrawDebug()
 		MOAIDraw::DrawLine(static_cast<USVec2D>(mCharacter->GetLoc()), static_cast<USVec2D>(mCharacter->GetLoc()) + mDesiredAcceleration);
 	}
 
+}
+
+void CArriveSteering::Arrive(USVec2D & LinearAcceleration)
+{
+	LinearAcceleration = USVec2D(0.f, 0.f);
+	mCharacter->SetLinearVelocity(LinearAcceleration);
 }

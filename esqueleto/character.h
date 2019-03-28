@@ -9,7 +9,7 @@
 
 class CSeekSteering;
 class CArriveSteering;
-
+class CAlignSteering;
 //class CSeekArrive;
 
 class Character: public MOAIEntity2D
@@ -42,7 +42,7 @@ private:
 
 	CSeekSteering*	 mSeekSteering;
 	CArriveSteering* mArriveSteering;
-	
+	CAlignSteering*  mAlignSteering;
 	// Lua configuration
 public:
 	virtual void RegisterLuaFuncs(MOAILuaState& state);
