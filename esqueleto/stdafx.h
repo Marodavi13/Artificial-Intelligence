@@ -5,7 +5,16 @@
 #include <moaicore/MOAIEntity2D.h>
 #include "uslscore\USVec2D.h"
 
-static bool IsVectorBiggerThan(const USVec2D Vector, const float OtherParam)  
+static bool IsVectorBiggerThan(const USVec2D vector, const float otherParam, float* lengthSquared = nullptr)  
 {
-	return Vector.LengthSquared() > pow(OtherParam, 2);
+	if(lengthSquared)
+	{
+		*lengthSquared = vector.LengthSquared();
+		return *lengthSquared > pow(otherParam, 2);
+
+	}
+	else
+	{
+		return vector.LengthSquared() > pow(otherParam, 2);
+	}
 }

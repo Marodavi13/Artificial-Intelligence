@@ -9,14 +9,13 @@ class CSteering
 {
 public:
 	CSteering();
+	CSteering(Character* character);
 	virtual ~CSteering();
 
-	virtual void GetSteering(Character* character, Params* params, USVec2D &outLinearAcceleration,float &outAngularAcceleration) = 0;
+	virtual void GetSteering(Params* params, USVec2D &outLinearAcceleration,float &outAngularAcceleration) = 0;
 	virtual void DrawDebug() = 0;
-
-private:
-
-
+protected:
+	Character* mCharacter;
 };
 
 

@@ -2,24 +2,39 @@
 #include "character.h"
 
 
-
-
-void CSeekSteering::GetSteering(Character* character, Params* params,USVec2D &outLinearAcceleration, float &outAngularAcceleration)
+CSeekSteering::CSeekSteering()
 {
-	mCharacterLocation = character->GetLoc();
+	cout << "SeekSteering Constructor" << endl;
+}
+
+CSeekSteering::CSeekSteering(Character * character) : CSteering(character)
+{
+}
+
+CSeekSteering::~CSeekSteering()
+{
+	cout << "SeekSteering Destructor" << endl;
+}
+
+
+
+void CSeekSteering::GetSteering(Params* params,USVec2D &outLinearAcceleration, float &outAngularAcceleration)
+{
+	mCharacterLocation = mCharacter->GetLoc();
 	mDesiredVelocity = params->targetPosition - mCharacterLocation;
+
 	if (IsVectorBiggerThan(mDesiredVelocity, params->max_velocity)) 
 	{
 		mDesiredVelocity.NormSafe();
 		mDesiredVelocity.Scale(params->max_velocity);
 	}
-	mDesiredAcceleration = mDesiredVelocity - character->GetLinearVelocity();
+	mDesiredAcceleration = mDesiredVelocity - mCharacter->GetLinearVelocity();
 	
 	if (IsVectorBiggerThan(mDesiredAcceleration, params->max_acceleration)) {
 		mDesiredAcceleration.NormSafe();
 		mDesiredAcceleration.Scale(params->max_acceleration);
 	}
-	//printf("Acceleration: %f , %f \n", mAcceleration.mX,mAcceleration.mY);
+	
 	outLinearAcceleration = mDesiredAcceleration;
 
 }

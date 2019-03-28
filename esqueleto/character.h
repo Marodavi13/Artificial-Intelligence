@@ -3,12 +3,13 @@
 
 #include <moaicore/MOAIEntity2D.h>
 #include <params.h>
-#include "SeekSteering.h"
-#include "ArriveSteering.h"
+
 
 #define CHARACTER
 
 class CSeekSteering;
+class CArriveSteering;
+
 //class CSeekArrive;
 
 class Character: public MOAIEntity2D
@@ -32,15 +33,15 @@ public:
 	float GetAngularVelocity()		const { return mAngularVelocity;}
 	float GetMaxAcceleration()		const { return mParams.max_acceleration; }
 	float GetMaxSpeed()				const { return mParams.max_velocity; }
-
+	Params* GetParams()					  { return &mParams; }
 
 private:
 	USVec2D			mLinearVelocity;
 	float			mAngularVelocity;
 	Params			mParams;
 
-	CSeekSteering*	mSeekSteering;
-	//CSeekArrive* mSeekArrive;
+	CSeekSteering*	 mSeekSteering;
+	CArriveSteering* mArriveSteering;
 	
 	// Lua configuration
 public:

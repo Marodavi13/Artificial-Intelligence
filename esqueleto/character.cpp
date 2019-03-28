@@ -2,7 +2,7 @@
 #include "character.h"
 #include <tinyxml.h>
 #include "SeekSteering.h"
-
+#include "ArriveSteering.h"
 
 Character::Character() : mLinearVelocity(0.0f, 0.0f), mAngularVelocity(0.0f)
 {
@@ -19,13 +19,14 @@ Character::~Character()
 void Character::OnStart()
 {
     ReadParams("params.xml", mParams);
-	mSeekSteering = new CSeekSteering();
-//	mSeekArrive = new CSeekArrive();
+	mSeekSteering = new CSeekSteering(this);
+	mArriveSteering = new CArriveSteering(this);
 }
 
 void Character::OnStop()
 {
 	delete mSeekSteering;
+	delete mArriveSteering;
 }
 
 void Character::OnUpdate(float step)
@@ -33,17 +34,24 @@ void Character::OnUpdate(float step)
 	USVec2D LinearAcceleration(0.f,0.f);
 	float AngularAcceleration = 0.f;
 
-	mSeekSteering->GetSteering(this, &mParams, LinearAcceleration, AngularAcceleration);
+	mSeekSteering->GetSteering(&mParams, LinearAcceleration, AngularAcceleration);
+	mArriveSteering->GetSteering(&mParams, LinearAcceleration, AngularAcceleration);
 
 	SetLinearVelocity(GetLinearVelocity()+ LinearAcceleration * step);
 	
 	SetLoc(GetLoc() + GetLinearVelocity()  * step);
 	SetRot(GetRot() + GetAngularVelocity() * step);
+	printf("X: %f, Y: %f", GetLoc().mX, GetLoc().mY);
+	//cout << "X:" + static_cast<int>() /*<< ", Y: " + static_cast<int>(GetLoc().mY)*/ << endl;
 }
 
 void Character::DrawDebug()
 {
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
+	gfxDevice.SetPenColor(1.0f, 0.0f, 0.0f, 1.f);
+	MOAIDraw::DrawPoint(mParams.targetPosition);
 	mSeekSteering->DrawDebug();
+	mArriveSteering->DrawDebug();
 }
 
 

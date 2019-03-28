@@ -1,31 +1,23 @@
-	//#pragma once
-//#ifndef CHARACTER
-//
-//#include "character.h"
-//#endif // !CHARACTER
-//
+#pragma once
+#include "Steering.h"
 
 
-//class Character;
-//
-//
-//class CSeekArrive
-//{
-//public:
-//	CSeekArrive();
-//	~CSeekArrive();
-//
-//	//void setArrivalVelocity(Character* character, Params params);
-//private:
-//
-//
-//};
-//
-//CSeekArrive::CSeekArrive()
-//{
-//}
-//
-//CSeekArrive::~CSeekArrive()
-//{
-//}
-//
+class Character;
+
+class CArriveSteering :  public CSteering
+{
+public:
+	CArriveSteering();
+	CArriveSteering(Character* character);
+
+	~CArriveSteering();
+
+	virtual void GetSteering(Params* params, USVec2D &outLinearAcceleration, float &outAngularAcceleration);
+	virtual void DrawDebug();
+private:
+	USVec2D mDesiredVelocity;
+	USVec2D mDesiredAcceleration;
+
+	bool bIsArriving;
+};
+
