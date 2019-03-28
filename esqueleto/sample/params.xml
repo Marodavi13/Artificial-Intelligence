@@ -7,7 +7,7 @@
 		<targetPosition x="0" y="0"> </targetPosition>
 <max_angular_velocity value="30"> </max_angular_velocity>
  <max_angular_acceleration value="30"> </max_angular_acceleration>
-<dest_angle value="0"> </dest_angle>
+<dest_angle value="0.5"> </dest_angle>
 
 	</params>
 </root>

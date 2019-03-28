@@ -34,17 +34,24 @@ void CArriveSteering::GetSteering(Params * params, USVec2D & outLinearAccelerati
 	float distanceSquared = 0.f;
 	if (!IsVectorBiggerThan(mDesiredVelocity, params->arrive_radius, &distanceSquared))
 	{
-		bIsArriving = true;
+	
 		if(distanceSquared < pow(params->dest_radius,2.f))
 		{
 			Arrive(outLinearAcceleration);
 		}
 		else
 		{
+			bIsArriving = true;
 			//Set desired Velocity
 			mDesiredVelocity.NormSafe();
 			mDesiredVelocity.Scale(mCharacter->GetMaxSpeed());
-			mDesiredVelocity = mDesiredVelocity * Sqrt(distanceSquared) / params->arrive_radius;;
+			float distScaler = (Sqrt(distanceSquared) - params->dest_radius);
+			if(distScaler < 0.f)
+			{
+				distScaler = 0.f;
+			}
+			mDesiredVelocity = mDesiredVelocity * distScaler / params->arrive_radius;
+			
 			//Calculate linear acceleration
 			mDesiredAcceleration = mDesiredVelocity - mCharacter->GetLinearVelocity();
 			SCALEVECTOR(mDesiredAcceleration, params->max_acceleration)

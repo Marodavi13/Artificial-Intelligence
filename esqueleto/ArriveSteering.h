@@ -19,6 +19,6 @@ private:
 	USVec2D mDesiredVelocity;
 	USVec2D mDesiredAcceleration;
 
-	bool bIsArriving;
+	bool bIsArriving = false;
 };
 
