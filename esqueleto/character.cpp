@@ -4,6 +4,7 @@
 #include "SeekSteering.h"
 #include "ArriveSteering.h"
 #include "AlignSteering.h"
+#include "PathSteering.h"
 Character::Character() : mLinearVelocity(0.0f, 0.0f), mAngularVelocity(0.0f)
 {
 	RTTI_BEGIN
@@ -19,16 +20,18 @@ Character::~Character()
 void Character::OnStart()
 {
     ReadParams("params.xml", mParams);
-	mSeekSteering = new CSeekSteering(this);
-	mArriveSteering = new CArriveSteering(this);
-	mAlignSteering = new CAlignSteering(this);
+	///mSeekSteering = new CSeekSteering(this);
+	mPathSteering = new CPathSteering(this);
+	mPathSteering->SetPath("path.xml");
+	AddSteeringBehavior(mPathSteering);
 }
 
 void Character::OnStop()
 {
-	delete mSeekSteering;
-	delete mArriveSteering;
-	delete mAlignSteering;
+	//delete mSeekSteering;
+	//delete mArriveSteering;
+	//delete mAlignSteering;
+	delete mPathSteering;
 }
 
 void Character::OnUpdate(float step)
@@ -36,11 +39,13 @@ void Character::OnUpdate(float step)
 	USVec2D LinearAcceleration(0.f,0.f);
 	float AngularAcceleration = 0.f;
 
-	mSeekSteering->GetSteering	(&mParams, LinearAcceleration, AngularAcceleration);
-	mArriveSteering->GetSteering(&mParams, LinearAcceleration, AngularAcceleration);
-	mAlignSteering->GetSteering	(&mParams, LinearAcceleration, AngularAcceleration);
-
-	SetLinearVelocity	(GetLinearVelocity()+ LinearAcceleration * step);
+	//mSeekSteering->GetSteering	(&mParams, LinearAcceleration, AngularAcceleration);
+	for(CSteering* steering: steeringBehaviors)
+	{
+		steering->GetSteering(&mParams, LinearAcceleration, AngularAcceleration);
+	}
+	
+	SetLinearVelocity	(GetLinearVelocity()  + LinearAcceleration * step);
 	SetAngularVelocity	(GetAngularVelocity() + AngularAcceleration * step);
 
 	SetLoc(GetLoc() + GetLinearVelocity()  * step);
@@ -53,8 +58,9 @@ void Character::DrawDebug()
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
 	gfxDevice.SetPenColor(1.0f, 0.0f, 0.0f, 1.f);
 	MOAIDraw::DrawPoint(mParams.targetPosition);
-	mSeekSteering->DrawDebug();
-	mArriveSteering->DrawDebug();
+	mPathSteering->DrawDebug();
+	//mSeekSteering->DrawDebug();
+	//mArriveSteering->DrawDebug();
 }
 
 

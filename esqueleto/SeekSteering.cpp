@@ -1,18 +1,23 @@
 #include "SeekSteering.h"
 #include "character.h"
-
-
+#include "ArriveSteering.h"
+#include "AlignSteering.h"
 CSeekSteering::CSeekSteering()
 {
 	cout << "SeekSteering Constructor" << endl;
+	
 }
 
 CSeekSteering::CSeekSteering(Character * character) : CSteering(character)
 {
+	mArrive = new CArriveSteering(character);
+	mAlign	= new CAlignSteering(character);
 }
 
 CSeekSteering::~CSeekSteering()
 {
+	delete mArrive;
+	delete mAlign;
 	cout << "SeekSteering Destructor" << endl;
 }
 
@@ -30,6 +35,8 @@ void CSeekSteering::GetSteering(Params* params,USVec2D &outLinearAcceleration, f
 
 	outLinearAcceleration = mDesiredAcceleration;
 
+	mArrive->GetSteering(params, outLinearAcceleration, outAngularAcceleration);
+	mAlign->GetSteering	(params, outLinearAcceleration, outAngularAcceleration);
 }
 
 void CSeekSteering::DrawDebug()
@@ -42,4 +49,6 @@ void CSeekSteering::DrawDebug()
 	gfxDevice.SetPenColor(0.0f, 1.0f, 0.0f, 0.5f);
 
 	MOAIDraw::DrawLine(mCharacterLocation, mCharacterLocation + mDesiredAcceleration);
+
+	mArrive->DrawDebug();
 }

@@ -58,6 +58,9 @@ bool ReadParams(const char* filename, Params& params)
 	paramElem = hParams.FirstChildElement("dest_angle").Element();
 	if (paramElem)
 		paramElem->Attribute("value", &params.dest_angle);
-
+	paramElem = hParams.FirstChildElement("look_ahead").Element();
+	if (paramElem)
+		paramElem->Attribute("value", &params.look_ahead);
+	
     return true;
 }

@@ -8,9 +8,9 @@
 #define CHARACTER
 
 class CSeekSteering;
-class CArriveSteering;
-class CAlignSteering;
-//class CSeekArrive;
+class CSteering;
+class CPathSteering;
+
 
 class Character: public MOAIEntity2D
 {
@@ -35,14 +35,17 @@ public:
 	float GetMaxSpeed()				const { return mParams.max_velocity; }
 	Params* GetParams()					  { return &mParams; }
 
+	void AddSteeringBehavior(CSteering* steering) { steeringBehaviors.push_back(steering); }
+
 private:
 	USVec2D			mLinearVelocity;
 	float			mAngularVelocity;
 	Params			mParams;
 
 	CSeekSteering*	 mSeekSteering;
-	CArriveSteering* mArriveSteering;
-	CAlignSteering*  mAlignSteering;
+	CPathSteering*	 mPathSteering;
+
+	vector<CSteering*> steeringBehaviors;
 	// Lua configuration
 public:
 	virtual void RegisterLuaFuncs(MOAILuaState& state);

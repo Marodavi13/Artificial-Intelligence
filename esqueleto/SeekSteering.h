@@ -2,7 +2,8 @@
 #include "Steering.h"
 
 class Character;
-
+class CArriveSteering;
+class CAlignSteering;
 using namespace std;
 
 class CSeekSteering : public CSteering
@@ -17,8 +18,8 @@ public:
 
 	
 private:
-	
-	USVec2D mCharacterLocation;
+	CArriveSteering* mArrive;
+	CAlignSteering* mAlign;
 	USVec2D mDesiredVelocity;
 	USVec2D mDesiredAcceleration;
 

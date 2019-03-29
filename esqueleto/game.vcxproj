@@ -126,6 +126,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AlignSteering.cpp" />
+    <ClCompile Include="PathSteering.cpp" />
     <ClCompile Include="Steering.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="ArriveSteering.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="host\ParticlePresets.h" />
     <ClInclude Include="params.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="PathSteering.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="sample\test.lua" />
