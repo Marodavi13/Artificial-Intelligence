@@ -8,10 +8,10 @@ CSeekSteering::CSeekSteering()
 	
 }
 
-CSeekSteering::CSeekSteering(Character * character) : CSteering(character)
+CSeekSteering::CSeekSteering(Character * character, const float& weight) : CSteering(character, weight)
 {
-	mArrive = new CArriveSteering(character);
-	mAlign	= new CAlignSteering(character);
+	mArrive = new CArriveSteering(character,weight);
+	mAlign	= new CAlignSteering(character, weight);
 }
 
 CSeekSteering::~CSeekSteering()
@@ -28,10 +28,10 @@ void CSeekSteering::GetSteering(Params* params,USVec2D &outLinearAcceleration, f
 	mCharacterLocation = mCharacter->GetLoc();
 
 	mDesiredVelocity = params->targetPosition - mCharacterLocation;
-	SCALEVECTOR(mDesiredVelocity, params->max_velocity)
+	mDesiredVelocity.NormSafe();
+	mDesiredVelocity.Scale(params->max_velocity);
 
-	mDesiredAcceleration = mDesiredVelocity - mCharacter->GetLinearVelocity();
-	SCALEVECTOR(mDesiredAcceleration, params->max_acceleration)
+	mDesiredAcceleration = (mDesiredVelocity - mCharacter->GetLinearVelocity()) * mWeight;
 
 	outLinearAcceleration = mDesiredAcceleration;
 
@@ -51,4 +51,11 @@ void CSeekSteering::DrawDebug()
 	MOAIDraw::DrawLine(mCharacterLocation, mCharacterLocation + mDesiredAcceleration);
 
 	mArrive->DrawDebug();
+}
+
+void CSeekSteering::SetWeight(const float & weight)
+{
+	CSteering::SetWeight(weight);
+	mArrive->SetWeight(weight);
+	mAlign->SetWeight(weight);
 }

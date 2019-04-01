@@ -6,7 +6,7 @@ class CAvoidanceSteering : public CSteering
 {
 public:
 	CAvoidanceSteering();
-	CAvoidanceSteering(Character* character);
+	CAvoidanceSteering(Character* character, const float& weight = 1.f);
 
 	~CAvoidanceSteering();
 

@@ -21,12 +21,11 @@ Character::~Character()
 void Character::OnStart()
 {
     ReadParams("params.xml", mParams);
-	///mSeekSteering = new CSeekSteering(this);
-	//mPathSteering = new CPathSteering(this);
-	//mPathSteering->SetPath("path.xml");
-	//AddSteeringBehavior(mPathSteering);
-	CAvoidanceSteering* Avoid = new CAvoidanceSteering(this);
-	AddSteeringBehavior(Avoid);
+
+	
+	AddSteeringBehavior(new CPathSteering(this));
+	AddSteeringBehavior(new CAvoidanceSteering(this,2.f));
+
 }
 
 void Character::OnStop()
@@ -36,10 +35,6 @@ void Character::OnStop()
 		delete Steer;
 	}
 	steeringBehaviors.empty();
-	//delete mSeekSteering;
-	//delete mArriveSteering;
-	//delete mAlignSteering;
-	 //delete mPathSteering;
 }
 
 void Character::OnUpdate(float step)
@@ -47,18 +42,25 @@ void Character::OnUpdate(float step)
 	USVec2D LinearAcceleration(0.f,0.f);
 	float AngularAcceleration = 0.f;
 
-	//mSeekSteering->GetSteering	(&mParams, LinearAcceleration, AngularAcceleration);
 	for(CSteering* steering: steeringBehaviors)
 	{
 		steering->GetSteering(&mParams, LinearAcceleration, AngularAcceleration);
 	}
-	
+	SCALEVECTOR(LinearAcceleration, mParams.max_acceleration);
+	SCALEFLOAT(AngularAcceleration, mParams.max_angular_acceleration);
+
 	SetLinearVelocity	(GetLinearVelocity()  + LinearAcceleration * step);
 	SetAngularVelocity	(GetAngularVelocity() + AngularAcceleration * step);
 
+	SCALEVECTOR(mLinearVelocity, mParams.max_velocity);
+	SCALEFLOAT(mAngularVelocity, mParams.max_angular_velocity);
+	
 	SetLoc(GetLoc() + GetLinearVelocity()  * step);
 	SetRot(GetRot() + GetAngularVelocity() * step);
 	
+	cout << "Current Velocity: " << mLinearVelocity.Length() << " || Current Acceleration: " << LinearAcceleration.Length() << endl;
+	cout << "Current Angular Velocity: " << mAngularVelocity << " || Current Angular Acceleration: " << AngularAcceleration << endl;
+
 }
 
 void Character::DrawDebug()

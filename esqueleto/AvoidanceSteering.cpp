@@ -5,7 +5,7 @@ CAvoidanceSteering::CAvoidanceSteering()
 {
 }
 
-CAvoidanceSteering::CAvoidanceSteering(Character * character): CSteering(character)
+CAvoidanceSteering::CAvoidanceSteering(Character * character, const float& weight): CSteering(character,weight)
 {
 	SetObstacles("obstacles.xml");
 }

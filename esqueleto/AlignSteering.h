@@ -9,7 +9,7 @@ class CAlignSteering : public CSteering
 {
 public:
 	CAlignSteering();
-	CAlignSteering(Character* character);
+	CAlignSteering(Character* character, const float& weight = 1.f);
 	~CAlignSteering();
 
 	void GetSteering(Params* params, USVec2D & outLinearAcceleration, float & outAngularAcceleration);

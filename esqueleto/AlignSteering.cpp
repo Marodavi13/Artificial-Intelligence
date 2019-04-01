@@ -5,7 +5,7 @@ CAlignSteering::CAlignSteering()
 {
 }
 
-CAlignSteering::CAlignSteering(Character * character): CSteering(character)
+CAlignSteering::CAlignSteering(Character * character, const float& weight): CSteering(character,weight)
 {
 }
 
@@ -37,10 +37,9 @@ void CAlignSteering::GetSteering(Params * params, USVec2D & outLinearAcceleratio
 			//set desired rotation
 			mDesiredVelocity = targetAngle - characterRotation;
 			SetAngleInBounds(mDesiredVelocity);
-			SCALEFLOAT(mDesiredVelocity, params->max_angular_velocity)
 			//set desired acceleration
-			mDesiredAcceleration = mDesiredVelocity - mCharacter->GetAngularVelocity();
-			SCALEFLOAT(mDesiredAcceleration, params->max_angular_acceleration)
+			mDesiredAcceleration = (mDesiredVelocity - mCharacter->GetAngularVelocity()) * mWeight;
+			//SCALEFLOAT(mDesiredAcceleration, params->max_angular_acceleration)
 			outAngularAcceleration = mDesiredAcceleration;
 		}
 	}

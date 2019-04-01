@@ -10,16 +10,15 @@ class CSeekSteering : public CSteering
 {
 public:
 	CSeekSteering();
-	CSeekSteering(Character* character);
+	CSeekSteering(Character* character, const float& weight = 1.f);
 	~CSeekSteering();
 
 	void GetSteering(Params* params , USVec2D & outLinearAcceleration, float & outAngularAcceleration);
 	void DrawDebug();
-
-	
+	virtual void SetWeight(const float& weight);
 private:
 	CArriveSteering* mArrive;
-	CAlignSteering* mAlign;
+	CAlignSteering * mAlign;
 	USVec2D mDesiredVelocity;
 	USVec2D mDesiredAcceleration;
 

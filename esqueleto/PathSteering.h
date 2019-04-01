@@ -10,7 +10,7 @@ class CPathSteering : public CSteering
 {
 public:
 	CPathSteering();
-	CPathSteering(Character* character);
+	CPathSteering(Character* character, const float& weight = 1.f);
 	~CPathSteering();
 
 	void GetSteering(Params* params, USVec2D & outLinearAcceleration, float & outAngularAcceleration);
@@ -24,7 +24,7 @@ private:
 
 	CSeekSteering*	mSeek;
 	vector<USVec2D>	mPath;
-	uint8_t			mNumberOfPathPoints;
+	size_t			mNumberOfPathPoints;
 	USVec2D			mClosestPoint;
 	uint8_t			mClosestSegment;
 };

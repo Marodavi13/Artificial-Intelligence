@@ -9,9 +9,10 @@ CPathSteering::CPathSteering()
 	
 }
 
-CPathSteering::CPathSteering(Character * character): CSteering(character)
+CPathSteering::CPathSteering(Character * character, const float& weight): CSteering(character, weight)
 {
-	mSeek = new CSeekSteering(character);
+	SetPath("path.xml");
+	mSeek = new CSeekSteering(character,weight);
 }
 
 CPathSteering::~CPathSteering()
@@ -24,8 +25,8 @@ void CPathSteering::GetSteering(Params * params, USVec2D & outLinearAcceleration
 	mCharacterLocation = mCharacter->GetLoc();
 	
 	SetClosestPointInPath();
-
 	SetTargetLocation(params);
+	
 	mSeek->GetSteering(params, outLinearAcceleration, outAngularAcceleration);
 }
 

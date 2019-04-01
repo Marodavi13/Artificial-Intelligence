@@ -8,7 +8,7 @@ class CArriveSteering :  public CSteering
 {
 public:
 	CArriveSteering();
-	CArriveSteering(Character* character);
+	CArriveSteering(Character* character, const float& weight = 1.f);
 
 	~CArriveSteering();
 

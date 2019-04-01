@@ -17,7 +17,7 @@ CArriveSteering::CArriveSteering()
 	cout << "ArriveSteering Constructor" << endl;
 }
 
-CArriveSteering::CArriveSteering(Character * character): CSteering(character)
+CArriveSteering::CArriveSteering(Character * character, const float& weight): CSteering(character, weight)
 {
 }
 
@@ -50,12 +50,23 @@ void CArriveSteering::GetSteering(Params * params, USVec2D & outLinearAccelerati
 			{
 				distScaler = 0.f;
 			}
-			mDesiredVelocity = mDesiredVelocity * distScaler / params->arrive_radius;
+			mDesiredVelocity = mDesiredVelocity * distScaler / (params->arrive_radius - params->dest_radius);
 			
 			//Calculate linear acceleration
-			mDesiredAcceleration = mDesiredVelocity - mCharacter->GetLinearVelocity();
-			SCALEVECTOR(mDesiredAcceleration, params->max_acceleration)
-			outLinearAcceleration = mDesiredAcceleration;
+			mDesiredAcceleration = (mDesiredVelocity - mCharacter->GetLinearVelocity());
+			//Calculate desired acceleration
+			if (mDesiredAcceleration.LengthSquared() > 0.5f) 
+			{
+				mDesiredAcceleration.NormSafe();
+				mDesiredAcceleration = mDesiredAcceleration * params->max_acceleration;
+			}
+			//Don't accelerate if desired velocity and current velocity are very similar
+			else {
+				mDesiredAcceleration = USVec2D(0.0f, 0.0f);
+			}
+
+			
+			outLinearAcceleration = mDesiredAcceleration * mWeight;;
 		}
 		
 	}
