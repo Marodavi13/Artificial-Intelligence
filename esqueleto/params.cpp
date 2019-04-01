@@ -61,6 +61,12 @@ bool ReadParams(const char* filename, Params& params)
 	paramElem = hParams.FirstChildElement("look_ahead").Element();
 	if (paramElem)
 		paramElem->Attribute("value", &params.look_ahead);
+	paramElem = hParams.FirstChildElement("look_ahead_avoid").Element();
+	if (paramElem)
+		paramElem->Attribute("value", &params.look_ahead_avoid);
+	paramElem = hParams.FirstChildElement("char_radius").Element();
+	if (paramElem)
+		paramElem->Attribute("value", &params.char_radius);
 	
-    return true;
+    return true; 
 }

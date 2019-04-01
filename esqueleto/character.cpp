@@ -5,6 +5,7 @@
 #include "ArriveSteering.h"
 #include "AlignSteering.h"
 #include "PathSteering.h"
+#include "AvoidanceSteering.h"
 Character::Character() : mLinearVelocity(0.0f, 0.0f), mAngularVelocity(0.0f)
 {
 	RTTI_BEGIN
@@ -21,17 +22,24 @@ void Character::OnStart()
 {
     ReadParams("params.xml", mParams);
 	///mSeekSteering = new CSeekSteering(this);
-	mPathSteering = new CPathSteering(this);
-	mPathSteering->SetPath("path.xml");
-	AddSteeringBehavior(mPathSteering);
+	//mPathSteering = new CPathSteering(this);
+	//mPathSteering->SetPath("path.xml");
+	//AddSteeringBehavior(mPathSteering);
+	CAvoidanceSteering* Avoid = new CAvoidanceSteering(this);
+	AddSteeringBehavior(Avoid);
 }
 
 void Character::OnStop()
 {
+	for(CSteering* Steer: steeringBehaviors)
+	{
+		delete Steer;
+	}
+	steeringBehaviors.empty();
 	//delete mSeekSteering;
 	//delete mArriveSteering;
 	//delete mAlignSteering;
-	delete mPathSteering;
+	 //delete mPathSteering;
 }
 
 void Character::OnUpdate(float step)
@@ -57,8 +65,13 @@ void Character::DrawDebug()
 {
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
 	gfxDevice.SetPenColor(1.0f, 0.0f, 0.0f, 1.f);
+	//gfxDevice.SetPenWidth(1.f);
 	MOAIDraw::DrawPoint(mParams.targetPosition);
-	mPathSteering->DrawDebug();
+	for(CSteering* steering : steeringBehaviors)
+	{
+		steering->DrawDebug();
+	}
+	//mPathSteering->DrawDebug();
 	//mSeekSteering->DrawDebug();
 	//mArriveSteering->DrawDebug();
 }

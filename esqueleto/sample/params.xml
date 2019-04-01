@@ -9,6 +9,8 @@
  		<max_angular_acceleration value="30"> </max_angular_acceleration>
 		<dest_angle value="0.5"> </dest_angle>
 		<look_ahead value="40"></look_ahead>
+		<look_ahead_avoid value="100"></look_ahead_avoid>
+		<char_radius value="40"></char_radius>
 
 	</params>
 </root>

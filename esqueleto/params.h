@@ -12,6 +12,8 @@ struct Params
 	float max_angular_acceleration;
 	float dest_angle;
 	float look_ahead;
+	float look_ahead_avoid;
+	float char_radius;
 };
 
 bool ReadParams(const char* filename, Params& params);

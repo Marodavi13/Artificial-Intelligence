@@ -126,6 +126,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AlignSteering.cpp" />
+    <ClCompile Include="AvoidanceSteering.cpp" />
     <ClCompile Include="PathSteering.cpp" />
     <ClCompile Include="Steering.cpp" />
     <ClCompile Include="character.cpp" />
@@ -143,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AlignSteering.h" />
+    <ClInclude Include="AvoidanceSteering.h" />
     <ClInclude Include="Steering.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="ArriveSteering.h" />

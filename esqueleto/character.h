@@ -42,8 +42,8 @@ private:
 	float			mAngularVelocity;
 	Params			mParams;
 
-	CSeekSteering*	 mSeekSteering;
-	CPathSteering*	 mPathSteering;
+	//CSeekSteering*	 mSeekSteering;
+	//CPathSteering*	 mPathSteering;
 
 	vector<CSteering*> steeringBehaviors;
 	// Lua configuration

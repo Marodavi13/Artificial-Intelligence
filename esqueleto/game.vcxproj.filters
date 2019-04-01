@@ -40,6 +40,9 @@
     <ClCompile Include="PathSteering.cpp">
       <Filter>AI</Filter>
     </ClCompile>
+    <ClCompile Include="AvoidanceSteering.cpp">
+      <Filter>AI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="host\FolderWatcher-win.h">
@@ -76,6 +79,9 @@
       <Filter>AI</Filter>
     </ClInclude>
     <ClInclude Include="PathSteering.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AvoidanceSteering.h">
       <Filter>AI</Filter>
     </ClInclude>
   </ItemGroup>
