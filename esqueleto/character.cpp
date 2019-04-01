@@ -24,7 +24,7 @@ void Character::OnStart()
 
 	
 	AddSteeringBehavior(new CPathSteering(this));
-	AddSteeringBehavior(new CAvoidanceSteering(this,2.f));
+	AddSteeringBehavior(new CAvoidanceSteering(this,2.5f));
 
 }
 
@@ -66,21 +66,14 @@ void Character::OnUpdate(float step)
 void Character::DrawDebug()
 {
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
-	gfxDevice.SetPenColor(1.0f, 0.0f, 0.0f, 1.f);
+	gfxDevice.SetPenColor(RED);
 	//gfxDevice.SetPenWidth(1.f);
 	MOAIDraw::DrawPoint(mParams.targetPosition);
-	for(CSteering* steering : steeringBehaviors)
+	for (CSteering* steering : steeringBehaviors)
 	{
 		steering->DrawDebug();
 	}
-	//mPathSteering->DrawDebug();
-	//mSeekSteering->DrawDebug();
-	//mArriveSteering->DrawDebug();
 }
-
-
-
-
 
 // Lua configuration
 
