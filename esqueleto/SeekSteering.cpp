@@ -26,31 +26,39 @@ CSeekSteering::~CSeekSteering()
 void CSeekSteering::GetSteering(Params* params,USVec2D &outLinearAcceleration, float &outAngularAcceleration)
 {
 	mCharacterLocation = mCharacter->GetLoc();
+	//if(!IsLocationInCircle(mCharacterLocation,params->target_position,params->arrive_radius))
+	//{
+		mDesiredVelocity = params->target_position - mCharacterLocation;
 
-	mDesiredVelocity = params->targetPosition - mCharacterLocation;
-	mDesiredVelocity.NormSafe();
-	mDesiredVelocity.Scale(params->max_velocity);
+		mDesiredVelocity.NormSafe();
+		mDesiredVelocity.Scale(params->max_velocity);
 
-	mDesiredAcceleration = (mDesiredVelocity - mCharacter->GetLinearVelocity()) * mWeight;
+		mDesiredAcceleration = (mDesiredVelocity - mCharacter->GetLinearVelocity()) * mWeight;
 
-	outLinearAcceleration = mDesiredAcceleration;
+		outLinearAcceleration = mDesiredAcceleration;
+	//}
+	//else
+	//{
+		mArrive->GetSteering(params, outLinearAcceleration, outAngularAcceleration);
+	//}
 
-	mArrive->GetSteering(params, outLinearAcceleration, outAngularAcceleration);
-	mAlign->GetSteering	(params, outLinearAcceleration, outAngularAcceleration);
+	mAlign->GetSteering(params, outLinearAcceleration, outAngularAcceleration);
+	
 }
 
 void CSeekSteering::DrawDebug()
 {
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
-	gfxDevice.SetPenColor(0.0f, 0.0f, 1.0f, 0.5f);
+	gfxDevice.SetPenColor(BLUE);
 
 	MOAIDraw::DrawLine(mCharacterLocation, mCharacterLocation + mDesiredVelocity);
 
-	gfxDevice.SetPenColor(0.0f, 1.0f, 0.0f, 0.5f);
+	gfxDevice.SetPenColor(GREEN);
 
 	MOAIDraw::DrawLine(mCharacterLocation, mCharacterLocation + mDesiredAcceleration);
 
 	mArrive->DrawDebug();
+	mAlign->DrawDebug();
 }
 
 void CSeekSteering::SetWeight(const float & weight)

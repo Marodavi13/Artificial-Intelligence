@@ -45,3 +45,7 @@ static float GetAngle(const USVec2D vector)
 	SetAngleInBounds(angle);
 	return angle;
 }
+static bool IsLocationInCircle(const USVec2D& location, const USVec2D& circleOrigin, const float& circleRadius)
+{
+	return !IsVectorBiggerThan(location - circleOrigin, circleRadius);
+}

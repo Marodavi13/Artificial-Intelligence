@@ -84,7 +84,7 @@ void CPathSteering::SetTargetLocation(Params* params)
 {
 	USVec2D lastPoint = mPath.back();
 	float totalAhead = 0.f;
-	uint8_t indexSegment = mClosestSegment;
+	size_t indexSegment = mClosestSegment;
 	USVec2D startSegment = mClosestPoint;
 	USVec2D endSegment = mPath[indexSegment + 1];
 	float	segmentLength = (endSegment - startSegment).LengthSquared();
@@ -108,7 +108,7 @@ void CPathSteering::SetTargetLocation(Params* params)
 	if (totalAhead + segmentLength >= pow(params->look_ahead, 2.f)) {
 		USVec2D segmentDir = endSegment - startSegment;
 		segmentDir.NormSafe();
-		params->targetPosition = startSegment + segmentDir * (params->look_ahead - Sqrt(totalAhead));
+		params->target_position = startSegment + segmentDir * (params->look_ahead - Sqrt(totalAhead));
 	}
 }
 

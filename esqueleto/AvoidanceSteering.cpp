@@ -23,7 +23,7 @@ void CAvoidanceSteering::GetSteering(Params * params, USVec2D & outLinearAcceler
 	{
 		CalculateAvoidance(obstacle, params);
 	}
-	outLinearAcceleration += mLinearAcceleration;
+	outLinearAcceleration += (mLinearAcceleration * mWeight);
 }
 
 void CAvoidanceSteering::DrawDebug()
@@ -36,7 +36,7 @@ void CAvoidanceSteering::DrawDebug()
 	}
 	gfxDevice.SetPenColor(RED);
 	MOAIDraw::DrawLine(mCharacterLocation, mCharacterLocation + mLinearAcceleration);
-	gfxDevice.SetPenColor(GREEN);
+	
 	gfxDevice.SetPenColor(BLUE);
 	gfxDevice.SetPointSize(10.f);
 	MOAIDraw::DrawPoint(mClosestPointToObstacle);

@@ -26,8 +26,8 @@ public:
 	Character();
 	~Character();
 	
-	void SetLinearVelocity(USVec2D NewVelocity) { mLinearVelocity  = NewVelocity; }
-	void SetAngularVelocity(float angle)		{ mAngularVelocity = angle;}
+	void SetLinearVelocity(const USVec2D& NewVelocity)	{ mLinearVelocity  = NewVelocity; }
+	void SetAngularVelocity(const float& angle)			{ mAngularVelocity = angle;}
 
 	USVec2D GetLinearVelocity()		const { return mLinearVelocity;}
 	float GetAngularVelocity()		const { return mAngularVelocity;}
@@ -41,11 +41,8 @@ private:
 	USVec2D			mLinearVelocity;
 	float			mAngularVelocity;
 	Params			mParams;
-
-	//CSeekSteering*	 mSeekSteering;
-	//CPathSteering*	 mPathSteering;
-
 	vector<CSteering*> steeringBehaviors;
+
 	// Lua configuration
 public:
 	virtual void RegisterLuaFuncs(MOAILuaState& state);

@@ -23,10 +23,10 @@ entity = Character.new()
 entity:setProp(prop, layer)
 -- Start the character (allow calls to OnUpdate)
 entity:start()
-entity:setLoc(-300, -45)
+entity:setLoc(-250, -200)
 entity:setRot(0)
-entity:setLinearVel(30, 0)
---entity:setAngularVel(10)
+entity:setLinearVel(0, 0)
+entity:setAngularVel(0)
 
 -- Enable Debug Draw
 debug = MOAIDrawDebug.get();

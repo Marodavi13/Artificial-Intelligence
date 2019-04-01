@@ -20,7 +20,7 @@ private:
 
 	vector<USVec3D> mObstacles;
 	vector<int> mCollisionObstacles;
-	uint8_t mNumberOfObstacles;
+	size_t mNumberOfObstacles;
 	void CalculateAvoidance(const USVec3D& obstacle, const Params* params);
 };
 

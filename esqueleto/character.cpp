@@ -21,7 +21,7 @@ Character::~Character()
 void Character::OnStart()
 {
     ReadParams("params.xml", mParams);
-
+	//AddSteeringBehavior(new CSeekSteering(this));
 	
 	AddSteeringBehavior(new CPathSteering(this));
 	AddSteeringBehavior(new CAvoidanceSteering(this,2.5f));
@@ -68,7 +68,7 @@ void Character::DrawDebug()
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
 	gfxDevice.SetPenColor(RED);
 	//gfxDevice.SetPenWidth(1.f);
-	MOAIDraw::DrawPoint(mParams.targetPosition);
+	MOAIDraw::DrawPoint(mParams.target_position);
 	for (CSteering* steering : steeringBehaviors)
 	{
 		steering->DrawDebug();
