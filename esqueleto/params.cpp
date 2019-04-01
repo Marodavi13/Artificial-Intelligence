@@ -30,8 +30,8 @@ bool ReadParams(const char* filename, Params& params)
 
     paramElem = hParams.FirstChildElement("max_acceleration").Element();
     if (paramElem)
-        paramElem->Attribute("value", &params.max_deceleration);
-	paramElem = hParams.FirstChildElement("max_acceleration").Element();
+        paramElem->Attribute("value", &params.max_acceleration);
+	paramElem = hParams.FirstChildElement("max_deceleration").Element();
 	if (paramElem)
 		paramElem->Attribute("value", &params.max_deceleration);
 

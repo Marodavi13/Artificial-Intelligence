@@ -26,8 +26,9 @@ CSeekSteering::~CSeekSteering()
 void CSeekSteering::GetSteering(Params* params,USVec2D &outLinearAcceleration, float &outAngularAcceleration)
 {
 	mCharacterLocation = mCharacter->GetLoc();
-	//if(!IsLocationInCircle(mCharacterLocation,params->target_position,params->arrive_radius))
-	//{
+	if(!IsLocationInCircle(mCharacterLocation,params->target_position,params->arrive_radius))
+	{
+		mArrive->CleanVariables();
 		mDesiredVelocity = params->target_position - mCharacterLocation;
 
 		mDesiredVelocity.NormSafe();
@@ -36,11 +37,11 @@ void CSeekSteering::GetSteering(Params* params,USVec2D &outLinearAcceleration, f
 		mDesiredAcceleration = (mDesiredVelocity - mCharacter->GetLinearVelocity()) * mWeight;
 
 		outLinearAcceleration = mDesiredAcceleration;
-	//}
-	//else
-	//{
+	}
+	else
+	{
 		mArrive->GetSteering(params, outLinearAcceleration, outAngularAcceleration);
-	//}
+	}
 
 	mAlign->GetSteering(params, outLinearAcceleration, outAngularAcceleration);
 	

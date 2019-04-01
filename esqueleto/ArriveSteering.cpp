@@ -62,7 +62,7 @@ void CArriveSteering::GetSteering(Params * params, USVec2D & outLinearAccelerati
 				if (mDesiredAcceleration.LengthSquared() > 0.f)
 				{
 					mDesiredAcceleration.NormSafe();
-					mDesiredAcceleration = mDesiredAcceleration * params->max_deceleration;// *distScaler / (params->arrive_radius - params->dest_radius);
+					mDesiredAcceleration = mDesiredAcceleration * params->max_deceleration;
 				}
 				//Don't accelerate if desired velocity and current velocity are very similar
 				else {
