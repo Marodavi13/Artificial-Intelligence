@@ -21,10 +21,10 @@ Character::~Character()
 void Character::OnStart()
 {
     ReadParams("params.xml", mParams);
-	//AddSteeringBehavior(new CSeekSteering(this));
+	AddSteeringBehavior(new CSeekSteering(this));
 	
-	AddSteeringBehavior(new CPathSteering(this));
-	AddSteeringBehavior(new CAvoidanceSteering(this,2.5f));
+	//AddSteeringBehavior(new CPathSteering(this));
+	//AddSteeringBehavior(new CAvoidanceSteering(this,2.5f));
 
 }
 
