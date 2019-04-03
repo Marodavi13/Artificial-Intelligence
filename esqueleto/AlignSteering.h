@@ -12,8 +12,8 @@ public:
 	CAlignSteering(Character* character, const float& weight = 1.f);
 	~CAlignSteering();
 
-	void GetSteering(Params* params, USVec2D & outLinearAcceleration, float & outAngularAcceleration);
-	void DrawDebug();
+	void GetSteering(Params* params, USVec2D & outLinearAcceleration, float & outAngularAcceleration) override;
+	void DrawDebug() const override;
 	void Arrive(float& outAngularAcceleration);
 
 private:

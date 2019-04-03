@@ -1,5 +1,4 @@
 #include <stdafx.h>
-
 #include "pathfinder.h"
 
 Pathfinder::Pathfinder() : MOAIEntity2D()
@@ -14,9 +13,25 @@ Pathfinder::~Pathfinder()
 
 }
 
+void Pathfinder::OnStart()
+{
+}
+
 void Pathfinder::UpdatePath()
 {
 
+}
+
+void Pathfinder::OnStop()
+{
+}
+
+void Pathfinder::OnUpdate(float step)
+{
+}
+
+void Pathfinder::SetGrid(string filename)
+{
 }
 
 void Pathfinder::DrawDebug()

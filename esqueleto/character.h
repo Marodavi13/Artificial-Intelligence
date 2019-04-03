@@ -1,11 +1,8 @@
-#ifndef __CHARACTER_H__
-#define __CHARACTER_H__
+#pragma once
+
 
 #include <moaicore/MOAIEntity2D.h>
 #include <params.h>
-
-
-#define CHARACTER
 
 class CSeekSteering;
 class CSteering;
@@ -51,4 +48,3 @@ private:
 	static int _setAngularVel(lua_State* L);
 };
 
-#endif

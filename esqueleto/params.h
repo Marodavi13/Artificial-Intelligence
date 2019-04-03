@@ -1,5 +1,4 @@
-#ifndef __PARAMS_H__
-#define __PARAMS_H__
+#pragma once
 
 struct Params
 {
@@ -20,4 +19,3 @@ struct Params
 
 bool ReadParams(const char* filename, Params& params);
 
-#endif

@@ -13,11 +13,11 @@ public:
 	CPathSteering(Character* character, const float& weight = 1.f);
 	~CPathSteering();
 
-	void GetSteering(Params* params, USVec2D & outLinearAcceleration, float & outAngularAcceleration);
-	void DrawDebug();
+	void GetSteering(Params* params, USVec2D & outLinearAcceleration, float & outAngularAcceleration) override;
+	void DrawDebug() const override;
 
 	bool SetPath(const string& filename);
-	void SetTargetLocation(Params* params);
+	void SetTargetLocation(Params* params) const;
 	USVec2D GetClosestPointInSegment(const USVec2D& start, const USVec2D& end);
 	void SetClosestPointInPath();
 private:

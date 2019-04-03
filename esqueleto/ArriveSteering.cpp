@@ -27,7 +27,6 @@ void CArriveSteering::GetSteering(Params * params, USVec2D & outLinearAccelerati
 	float distanceSquared = 0.f;
 	if (!IsVectorBiggerThan(mDesiredVelocity, params->arrive_radius, &distanceSquared))
 	{
-	
 		if(distanceSquared < pow(params->dest_radius,2.f))
 		{
 			Arrive(outLinearAcceleration);
@@ -47,7 +46,6 @@ void CArriveSteering::GetSteering(Params * params, USVec2D & outLinearAccelerati
 			else
 			{
 				mDesiredVelocity = mDesiredVelocity * distScaler / (params->arrive_radius - params->dest_radius);
-
 				//Calculate linear acceleration
 				mDesiredAcceleration = (mDesiredVelocity - mCharacter->GetLinearVelocity());
 				//Calculate desired acceleration
@@ -60,13 +58,9 @@ void CArriveSteering::GetSteering(Params * params, USVec2D & outLinearAccelerati
 				else {
 					mDesiredAcceleration = USVec2D(0.0f, 0.0f);
 				}
-
-
 				outLinearAcceleration = mDesiredAcceleration * mWeight;;
 			}
-			
 		}
-		
 	}
 	else
 	{
@@ -75,7 +69,7 @@ void CArriveSteering::GetSteering(Params * params, USVec2D & outLinearAccelerati
 	}
 }
 
-void CArriveSteering::DrawDebug()
+void CArriveSteering::DrawDebug() const
 {
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
 	if (bIsArriving)
@@ -83,7 +77,6 @@ void CArriveSteering::DrawDebug()
 		gfxDevice.SetPenColor(RED);
 		MOAIDraw::DrawLine(mCharacterLocation, mCharacterLocation + mDesiredAcceleration);
 	}
-
 }
 
 void CArriveSteering::Arrive(USVec2D & LinearAcceleration)

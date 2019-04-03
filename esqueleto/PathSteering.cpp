@@ -30,7 +30,7 @@ void CPathSteering::GetSteering(Params * params, USVec2D & outLinearAcceleration
 	mSeek->GetSteering(params, outLinearAcceleration, outAngularAcceleration);
 }
 
-void CPathSteering::DrawDebug()
+void CPathSteering::DrawDebug() const
 {
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
 	gfxDevice.SetPenColor(1.0f, 1.0f, 1.0f, 1.f);
@@ -80,7 +80,7 @@ bool CPathSteering::SetPath(const string& filename)
 	
 }
 
-void CPathSteering::SetTargetLocation(Params* params)
+void CPathSteering::SetTargetLocation(Params* params) const
 {
 	USVec2D lastPoint = mPath.back();
 	float totalAhead = 0.f;
@@ -117,10 +117,11 @@ USVec2D CPathSteering::GetClosestPointInSegment(const USVec2D & start, const USV
 	//Vector that indicates the direction of the segment
 	USVec2D segmentVector = end - start;
 	segmentVector.NormSafe();
+
 	//Vector that indicates the player position from the start of the segment
 	USVec2D vector = mCharacterLocation - start;
-	
 	float projection = vector.Dot(segmentVector);
+
 	//if the projection is bigger than the segment i have passed it
 	//As vector isn't used anymore, i use it for the closest point
 	if(!IsVectorBiggerThan(end-start,projection))

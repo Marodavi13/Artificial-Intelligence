@@ -10,9 +10,9 @@ public:
 
 	~CAvoidanceSteering();
 
-	virtual void GetSteering(Params* params, USVec2D &outLinearAcceleration, float &outAngularAcceleration);
-	virtual void DrawDebug();
-	bool SetObstacles(string filename);
+	void GetSteering(Params* params, USVec2D &outLinearAcceleration, float &outAngularAcceleration) override;
+	void DrawDebug() const override;
+	bool SetObstacles(const string& filename);
 private:
 
 	USVec2D mLinearAcceleration;

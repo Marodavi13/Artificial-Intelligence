@@ -45,7 +45,7 @@ void CAlignSteering::GetSteering(Params * params, USVec2D & outLinearAcceleratio
 	}
 }
 
-void CAlignSteering::DrawDebug()
+void CAlignSteering::DrawDebug() const
 {
 }
 

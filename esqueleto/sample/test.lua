@@ -1,8 +1,9 @@
-MOAISim.openWindow("game", 1024, 768)
+
+MOAISim.openWindow("game", 1024, 1024)
 
 viewport = MOAIViewport.new()
-viewport:setSize (1024, 768)
-viewport:setScale (1024, -768)
+viewport:setSize (1024, 1024)
+viewport:setScale (1024, -1024)
 
 layer = MOAILayer2D.new()
 layer:setViewport(viewport)

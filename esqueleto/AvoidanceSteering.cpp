@@ -26,7 +26,7 @@ void CAvoidanceSteering::GetSteering(Params * params, USVec2D & outLinearAcceler
 	outLinearAcceleration += (mLinearAcceleration * mWeight);
 }
 
-void CAvoidanceSteering::DrawDebug()
+void CAvoidanceSteering::DrawDebug() const
 {
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
 	gfxDevice.SetPenColor(WHITE);
@@ -44,7 +44,7 @@ void CAvoidanceSteering::DrawDebug()
 
 }
 
-bool CAvoidanceSteering::SetObstacles(string filename)
+bool CAvoidanceSteering::SetObstacles(const string& filename)
 {
 	TiXmlDocument doc(filename);
 	if (!doc.LoadFile())
@@ -91,17 +91,21 @@ void CAvoidanceSteering::CalculateAvoidance(const USVec3D& obstacle, const Param
 	gfxDevice.SetPenWidth(50.f);
 	//My avoidance acceleration
 	USVec2D linearAcceleration(0.0f, 0.0f);
+
 	//The obstacle
 	USVec2D obstacleLoc(obstacle.mX, obstacle.mY);
 	float obstacleRadius = obstacle.mZ;
+
 	//Get my velocity ad lookAhead velocity
 	USVec2D velocity = mCharacter->GetLinearVelocity();
 	velocity.NormSafe();
 	USVec2D lookAhead = velocity * params->look_ahead_avoid;
+
 	//get the closest point to the obstacle
 	USVec2D obstacleDirection = obstacleLoc - mCharacter->GetLoc();
 	float projection = obstacleDirection.Dot(velocity);
 	USVec2D closestPointToObstacle = mCharacterLocation + velocity * projection;
+
 	//if the closest point is farther than the look ahead, get the look ahead
 	if (pow(projection,2.f) > lookAhead.LengthSquared()) 
 	{
@@ -129,8 +133,6 @@ void CAvoidanceSteering::CalculateAvoidance(const USVec3D& obstacle, const Param
 		{
 			linearAcceleration.Rotate90Clockwise();
 		}
-
 	}
 	mLinearAcceleration += linearAcceleration;
-	
 }

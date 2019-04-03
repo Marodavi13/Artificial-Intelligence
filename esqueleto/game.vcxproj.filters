@@ -26,25 +26,31 @@
       <Filter>Basics</Filter>
     </ClCompile>
     <ClCompile Include="Steering.cpp">
-      <Filter>AI</Filter>
+      <Filter>Steering</Filter>
     </ClCompile>
     <ClCompile Include="SeekSteering.cpp">
-      <Filter>AI</Filter>
+      <Filter>Steering</Filter>
     </ClCompile>
     <ClCompile Include="ArriveSteering.cpp">
-      <Filter>AI</Filter>
+      <Filter>Steering</Filter>
     </ClCompile>
     <ClCompile Include="AlignSteering.cpp">
-      <Filter>AI</Filter>
+      <Filter>Steering</Filter>
     </ClCompile>
     <ClCompile Include="PathSteering.cpp">
-      <Filter>AI</Filter>
+      <Filter>Steering</Filter>
     </ClCompile>
     <ClCompile Include="AvoidanceSteering.cpp">
-      <Filter>AI</Filter>
+      <Filter>Steering</Filter>
     </ClCompile>
     <ClCompile Include="pathfinder.cpp">
-      <Filter>Basics</Filter>
+      <Filter>Path</Filter>
+    </ClCompile>
+    <ClCompile Include="Node.cpp">
+      <Filter>Path</Filter>
+    </ClCompile>
+    <ClCompile Include="GridNode.cpp">
+      <Filter>Path</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -70,25 +76,31 @@
       <Filter>Basics</Filter>
     </ClInclude>
     <ClInclude Include="Steering.h">
-      <Filter>AI</Filter>
+      <Filter>Steering</Filter>
     </ClInclude>
     <ClInclude Include="SeekSteering.h">
-      <Filter>AI</Filter>
+      <Filter>Steering</Filter>
     </ClInclude>
     <ClInclude Include="ArriveSteering.h">
-      <Filter>AI</Filter>
+      <Filter>Steering</Filter>
     </ClInclude>
     <ClInclude Include="AlignSteering.h">
-      <Filter>AI</Filter>
+      <Filter>Steering</Filter>
     </ClInclude>
     <ClInclude Include="PathSteering.h">
-      <Filter>AI</Filter>
+      <Filter>Steering</Filter>
     </ClInclude>
     <ClInclude Include="AvoidanceSteering.h">
-      <Filter>AI</Filter>
+      <Filter>Steering</Filter>
     </ClInclude>
     <ClInclude Include="pathfinder.h">
-      <Filter>Basics</Filter>
+      <Filter>Path</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Path</Filter>
+    </ClInclude>
+    <ClInclude Include="GridNode.h">
+      <Filter>Path</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -98,11 +110,14 @@
     <Filter Include="sample">
       <UniqueIdentifier>{dafee91e-18b1-4dd7-a488-726565484f1c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AI">
-      <UniqueIdentifier>{f1130802-6932-441d-86bd-76022c8f9ef3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Basics">
       <UniqueIdentifier>{fbc5f49a-9c0e-48d9-bb9b-6f7705b96728}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Steering">
+      <UniqueIdentifier>{f1130802-6932-441d-86bd-76022c8f9ef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Path">
+      <UniqueIdentifier>{38eb6d9e-d1e2-4794-9ec9-a6070f205473}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

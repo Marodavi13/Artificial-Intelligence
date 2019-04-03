@@ -4,13 +4,31 @@
 #include <moaicore/MOAIDraw.h>
 #include <moaicore/MOAIEntity2D.h>
 #include "uslscore\USVec2D.h"
+//Math
 #define RAD2DEG 180.f/3.1416f
+//Colors
+#define RED		1.f,    0.f,    0.f,    1.f
+#define BLUE	0.f,    0.f,    1.f,    1.f
+#define GREEN	0.f,    1.f,    0.f,    1.f
+#define WHITE	1.f,    1.f,    1.f,    1.f
+#define BROWN   0.65f,  0.165f, 0.165f, 1.f
+//Screen and map
+#define SCREEN_WIDTH  1024
+#define SCREEN_HEIGHT 1024
+#define MAP_ROWS    24
+#define MAP_COLUMNS 32
+#define GRID_SIZE   32
+#define GRID_RECT(grid) grid.mX - GRID_SIZE * 0.5f, grid.mY - GRID_SIZE * 0.5f, grid.mX + GRID_SIZE * 0.5f, grid.mY + GRID_SIZE * 0.5f
+
+//Costs
+#define C_NORMAL    1
+#define C_MUD       2
+#define C_WATER     3
+#define C_OBSTACLE -1
+//Grid frontiers
+//Clamp vector and float
 #define SCALEVECTOR(vector,max)	if(IsVectorBiggerThan(vector,max)){vector.NormSafe();vector.Scale(max);}
 #define SCALEFLOAT(number,max)	if(abs(number)> max){number = (signbit(number) * -2.f + 1.f) * max;}
-#define RED		1.f,0.f,0.f,1.f
-#define BLUE	0.f,0.f,1.f,1.f
-#define GREEN	0.f,1.f,0.f,1.f
-#define WHITE	1.f,1.f,1.f,1.f
 
 static bool IsVectorBiggerThan(const USVec2D vector, const float otherParam, float* lengthSquared = nullptr)  
 {

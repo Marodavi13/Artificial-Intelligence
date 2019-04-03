@@ -47,7 +47,7 @@ void CSeekSteering::GetSteering(Params* params,USVec2D &outLinearAcceleration, f
 	
 }
 
-void CSeekSteering::DrawDebug()
+void CSeekSteering::DrawDebug() const
 {
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
 	gfxDevice.SetPenColor(BLUE);
