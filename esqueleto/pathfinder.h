@@ -1,11 +1,13 @@
 #pragma once
 #include <moaicore/MOAIEntity2D.h>
-class CNode;
+#include "Node.h"
+class Character;
 
 struct CPathNode
 {
     CPathNode(): CPathNode(nullptr) {}
-    CPathNode(const CNode* node) :mNode(node), mParent(nullptr), mCurrentScore(0), mTotalScore(0) {};
+    CPathNode(const CNode* node, const CNode* parent = nullptr, float currentscore = 0.f, float totalscore = 0.f) :mNode(node), mParent(parent), mCurrentScore(currentscore), mTotalScore(totalscore) {};
+    ~CPathNode() {}
 
     const CNode* mNode;
     const CNode* mParent;
@@ -13,49 +15,48 @@ struct CPathNode
     float mTotalScore;
 };
 
-class Pathfinder: public virtual MOAIEntity2D
+class Pathfinder : public virtual MOAIEntity2D
 {
 public:
-	DECL_LUA_FACTORY(Pathfinder)
-protected:
-	virtual void OnStart();
-	virtual void OnStop();
-	virtual void OnUpdate(float step);
-
-	void SetGrid(string filename);
+    DECL_LUA_FACTORY(Pathfinder)
 public:
 
 
-	Pathfinder();
-	~Pathfinder();
+    Pathfinder();
+    ~Pathfinder();
 
-	void SetStartPosition(float x, float y) { m_StartPosition = USVec2D(x, y); UpdatePath();}
-	void SetEndPosition(float x, float y) { m_EndPosition = USVec2D(x, y); UpdatePath();}
-	const USVec2D& GetStartPosition() const { return m_StartPosition;}
-	const USVec2D& GetEndPosition() const { return m_EndPosition;}
+    void SetStartPosition(float x, float y) { 
+        mStartPosition = USVec2D(x, y);/* UpdatePath(); */}
+    void SetEndPosition(float x, float y) { mEndPosition = USVec2D(x, y); if (mEndNode) mEndNode->bIsEndNode = false; mEndNode = CNode::GetNodeFromLocation(mEndPosition, mMap); mEndNode->bIsEndNode = true; UpdatePath(); }
+    const USVec2D& GetStartPosition() const { return mStartPosition; }
+    const USVec2D& GetEndPosition() const { return mEndPosition; }
 
-    bool PathfindStep();
+
     virtual void DrawDebug();
 private:
-	void UpdatePath();
+    bool ReadGrid(const string* filename);
+    void UpdatePath();
     CPathNode* GetNodeWithMinCost();
 private:
-	USVec2D m_StartPosition;
-	USVec2D m_EndPosition;
+    USVec2D mStartPosition;
+    USVec2D mEndPosition;
+    CNode*  mEndNode;
+    //All nodes
     vector<CNode*> mMap;
-    vector<const CNode*> mPath;
+    //Nodes to travel from
     map<const CNode*, CPathNode*> mOpenMap;
+    //Nodes visited with neighbours visited
     map<const CNode*, CPathNode*> mClosedMap;
     Character*                    mCharacter;
 
-	// Lua configuration
+    // Lua configuration
 
 public:
-	virtual void RegisterLuaFuncs(MOAILuaState& state);
+    virtual void RegisterLuaFuncs(MOAILuaState& state);
 private:
-	static int _setStartPosition(lua_State* L);
-	static int _setEndPosition(lua_State* L);
-    static int _pathfindStep(lua_State* L);
+    static int _setCharacter(lua_State* L);
+    static int _setStartPosition(lua_State* L);
+    static int _setEndPosition(lua_State* L);
 };
 
 

@@ -16,15 +16,12 @@ public:
 	void GetSteering(Params* params, USVec2D & outLinearAcceleration, float & outAngularAcceleration) override;
 	void DrawDebug() const override;
 
-	bool SetPath(const string& filename);
 	void SetTargetLocation(Params* params) const;
 	USVec2D GetClosestPointInSegment(const USVec2D& start, const USVec2D& end);
 	void SetClosestPointInPath();
 private:
 
 	CSeekSteering*	mSeek;
-	vector<USVec2D>	mPath;
-	size_t			mNumberOfPathPoints;
 	USVec2D			mClosestPoint;
 	uint8_t			mClosestSegment;
 };

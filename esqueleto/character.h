@@ -23,22 +23,30 @@ public:
 	Character();
 	~Character();
 	
-	void SetLinearVelocity(const USVec2D& NewVelocity)	{ mLinearVelocity  = NewVelocity; }
-	void SetAngularVelocity(const float& angle)			{ mAngularVelocity = angle;}
+	void SetLinearVelocity  (const USVec2D& NewVelocity)	{ mLinearVelocity  = NewVelocity; }
+	void SetAngularVelocity (const float& angle)			{ mAngularVelocity = angle;}
 
 	USVec2D GetLinearVelocity()		const { return mLinearVelocity;}
 	float GetAngularVelocity()		const { return mAngularVelocity;}
 	float GetMaxAcceleration()		const { return mParams.max_acceleration; }
 	float GetMaxSpeed()				const { return mParams.max_velocity; }
-	Params* GetParams()					  { return &mParams; }
+	Params* GetParams()				      { return &mParams; }
 
 	void AddSteeringBehavior(CSteering* steering) { steeringBehaviors.push_back(steering); }
-
 private:
+
+    bool SetPath(const string& filename);
+public:
+    vector<USVec2D>	mPath;
+    size_t			mNumberOfPathPoints;
+private:
+  
 	USVec2D			mLinearVelocity;
 	float			mAngularVelocity;
 	Params			mParams;
 	vector<CSteering*> steeringBehaviors;
+
+
 
 	// Lua configuration
 public:

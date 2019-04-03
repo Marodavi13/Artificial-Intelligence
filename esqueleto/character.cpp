@@ -6,7 +6,7 @@
 #include "AlignSteering.h"
 #include "PathSteering.h"
 #include "AvoidanceSteering.h"
-Character::Character() : mLinearVelocity(0.0f, 0.0f), mAngularVelocity(0.0f)
+Character::Character() : mLinearVelocity(0.0f, 0.0f), mAngularVelocity(0.0f), mNumberOfPathPoints(0)
 {
 	RTTI_BEGIN
 		RTTI_EXTEND (MOAIEntity2D)
@@ -15,15 +15,17 @@ Character::Character() : mLinearVelocity(0.0f, 0.0f), mAngularVelocity(0.0f)
 
 Character::~Character()
 {
+    ReadParams("params.xml", mParams);
 
 }
 
 void Character::OnStart()
 {
     ReadParams("params.xml", mParams);
-	AddSteeringBehavior(new CSeekSteering(this));
+   // SetPath("path.xml");
+	//AddSteeringBehavior(new CSeekSteering(this));
 	
-	//AddSteeringBehavior(new CPathSteering(this));
+	AddSteeringBehavior(new CPathSteering(this));
 	//AddSteeringBehavior(new CAvoidanceSteering(this,2.5f));
 
 }
@@ -34,7 +36,7 @@ void Character::OnStop()
 	{
 		delete Steer;
 	}
-	steeringBehaviors.empty();
+	steeringBehaviors.clear();
 }
 
 void Character::OnUpdate(float step)
@@ -66,9 +68,11 @@ void Character::OnUpdate(float step)
 void Character::DrawDebug()
 {
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
-	gfxDevice.SetPenColor(RED);
-	//gfxDevice.SetPenWidth(1.f);
-	MOAIDraw::DrawPoint(mParams.target_position);
+	gfxDevice.SetPenColor(GREEN);
+	
+	MOAIDraw::DrawPoint(GetLoc());
+    MOAIDraw::DrawPoint(USVec2D(0.f,0.f));
+
 	for (CSteering* steering : steeringBehaviors)
 	{
 		steering->DrawDebug();
@@ -76,6 +80,44 @@ void Character::DrawDebug()
 }
 
 // Lua configuration
+
+bool Character::SetPath(const string & filename)
+{
+    TiXmlDocument doc(filename);
+    if (!doc.LoadFile())
+    {
+        cout << "Couldn't read params from " << filename << endl;
+        return false;
+    }
+
+    TiXmlHandle hDoc(&doc);
+
+    TiXmlElement* pElem;
+    pElem = hDoc.FirstChildElement().Element();
+    if (!pElem)
+    {
+        cout << "Invalid format for " << filename << endl;
+        return false;
+    }
+
+    TiXmlHandle hRoot(pElem);
+    TiXmlHandle hPoints = hRoot.FirstChildElement("points");
+
+    TiXmlElement* pointElem = hPoints.FirstChild().Element();
+    for (pointElem; pointElem; pointElem = pointElem->NextSiblingElement())
+    {
+        string pointName = pointElem->Value();
+        if (!strcmp(pointName.c_str(), "point"))
+        {
+            USVec2D point;
+            pointElem->Attribute("x", &point.mX);
+            pointElem->Attribute("y", &point.mY);
+            mPath.push_back(point);
+        }
+    }
+    mNumberOfPathPoints = mPath.size();
+    return true;
+}
 
 void Character::RegisterLuaFuncs(MOAILuaState& state)
 {

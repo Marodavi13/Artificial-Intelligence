@@ -11,7 +11,7 @@ CPathSteering::CPathSteering()
 
 CPathSteering::CPathSteering(Character * character, const float& weight): CSteering(character, weight)
 {
-	SetPath("path.xml");
+	
 	mSeek = new CSeekSteering(character,weight);
 }
 
@@ -22,81 +22,48 @@ CPathSteering::~CPathSteering()
 
 void CPathSteering::GetSteering(Params * params, USVec2D & outLinearAcceleration, float & outAngularAcceleration)
 {
-	mCharacterLocation = mCharacter->GetLoc();
-	
-	SetClosestPointInPath();
-	SetTargetLocation(params);
-	
-	mSeek->GetSteering(params, outLinearAcceleration, outAngularAcceleration);
+    if (mCharacter->mNumberOfPathPoints > 0) 
+    {
+        mCharacterLocation = mCharacter->GetLoc();
+
+        SetClosestPointInPath();
+        SetTargetLocation(params);
+
+        mSeek->GetSteering(params, outLinearAcceleration, outAngularAcceleration);
+    }
 }
 
 void CPathSteering::DrawDebug() const
 {
-	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
-	gfxDevice.SetPenColor(1.0f, 1.0f, 1.0f, 1.f);
-	for(uint8_t i = 0; i < mNumberOfPathPoints-1; ++i)
-	{
-		MOAIDraw::DrawLine(mPath[i], mPath[i+1]);
-	}
-	mSeek->DrawDebug();
-}
-
-bool CPathSteering::SetPath(const string& filename)
-{
-	TiXmlDocument doc(filename);
-	if (!doc.LoadFile())
-	{
-		cout << "Couldn't read params from " << filename << endl;
-		return false;
-	}
-
-	TiXmlHandle hDoc(&doc);
-
-	TiXmlElement* pElem;
-	pElem = hDoc.FirstChildElement().Element();
-	if (!pElem)
-	{
-		cout << "Invalid format for " << filename << endl;
-		return false;
-	}
-
-	TiXmlHandle hRoot(pElem);
-	TiXmlHandle hPoints = hRoot.FirstChildElement("points");
-
-	TiXmlElement* pointElem = hPoints.FirstChild().Element();
-	for (pointElem; pointElem; pointElem = pointElem->NextSiblingElement())
-	{
-		string pointName = pointElem->Value();
-		if (!strcmp(pointName.c_str(), "point"))
-		{
-			USVec2D point;
-			pointElem->Attribute("x", &point.mX);
-			pointElem->Attribute("y", &point.mY);
-			mPath.push_back(point);
-		}
-	}
-	mNumberOfPathPoints = mPath.size();
-	return true;
-	
+    if (mCharacter->mNumberOfPathPoints > 0)
+    {
+        MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
+        gfxDevice.SetPenColor(1.0f, 1.0f, 1.0f, 1.f);
+        for (uint8_t i = 0; i < mCharacter->mNumberOfPathPoints - 1; ++i)
+        {
+            MOAIDraw::DrawLine(mCharacter->mPath[i], mCharacter->mPath[i + 1]);
+        }
+        mSeek->DrawDebug();
+    }
 }
 
 void CPathSteering::SetTargetLocation(Params* params) const
 {
-	USVec2D lastPoint = mPath.back();
+	USVec2D lastPoint = mCharacter->mPath.back();
 	float totalAhead = 0.f;
 	size_t indexSegment = mClosestSegment;
 	USVec2D startSegment = mClosestPoint;
-	USVec2D endSegment = mPath[indexSegment + 1];
+	USVec2D endSegment = mCharacter->mPath[indexSegment + 1];
 	float	segmentLength = (endSegment - startSegment).LengthSquared();
 
 	while(totalAhead + segmentLength < pow(params->look_ahead,2.f))
 	{
 		++indexSegment;
-		if(indexSegment+1 < mNumberOfPathPoints)
+		if(indexSegment+1 < mCharacter->mNumberOfPathPoints)
 		{
 			totalAhead += segmentLength;
-			startSegment = mPath[indexSegment];
-			endSegment = mPath[indexSegment + 1];
+			startSegment = mCharacter->mPath[indexSegment];
+			endSegment = mCharacter->mPath[indexSegment + 1];
 			segmentLength = (endSegment - startSegment).LengthSquared();
 		}
 		else
@@ -146,15 +113,15 @@ void CPathSteering::SetClosestPointInPath()
 {
 	float minDistance = 999999999999999.f;
 	uint8_t CurrentIndex = 0;
-	for(uint8_t i = 0; i< mNumberOfPathPoints-1;++i)
-	{
-		USVec2D closestPoint = GetClosestPointInSegment(mPath[i], mPath[i + 1]);
-		float currentDistance = (closestPoint - mCharacterLocation).Length();
-		if(currentDistance < minDistance)
-		{
-			minDistance = currentDistance;
-			mClosestSegment = i;
-			mClosestPoint = closestPoint;
-		}
-	}
+    for (uint8_t i = 0; i < mCharacter->mNumberOfPathPoints - 1; ++i)
+    {
+            USVec2D closestPoint = GetClosestPointInSegment(mCharacter->mPath[i], mCharacter->mPath[i + 1]);
+            float currentDistance = (closestPoint - mCharacterLocation).Length();
+            if (currentDistance < minDistance)
+            {
+                minDistance = currentDistance;
+                mClosestSegment = i;
+                mClosestPoint = closestPoint;
+            }
+    }
 }

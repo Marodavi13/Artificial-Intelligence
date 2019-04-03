@@ -8,7 +8,7 @@ public:
 	CNode() {}
 	~CNode() {}
 
-    static const CNode* GetNodeFromLocation(const USVec2D& location, const std::vector<CNode*>& nodes);
+    static CNode* GetNodeFromLocation(const USVec2D& location, const std::vector<CNode*>& nodes);
 
 
 	virtual USVec2D			GetNodeLocation		()						const = 0;
@@ -17,5 +17,9 @@ public:
 	virtual void			DrawDebug			()												const = 0;
 private:
     virtual bool			IsLocationInside	(const USVec2D& location)						const = 0;
+public:
+    bool bIsEndNode = false;
+
 
 };
+
