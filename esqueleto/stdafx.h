@@ -20,7 +20,7 @@
 #define MAP_ROWS    10
 #define MAP_COLUMNS 10
 #define GRID_SIZE   50
-#define GRID_RECT(grid) grid.mX - GRID_SIZE * 0.5f, grid.mY - GRID_SIZE * 0.5f, grid.mX + GRID_SIZE * 0.5f, grid.mY + GRID_SIZE * 0.5f
+#define GRID_RECT(grid) grid.mX - GRID_SIZE * 0.5f *0.9f, grid.mY - GRID_SIZE * 0.5f*0.9f, grid.mX + GRID_SIZE * 0.5f*0.9f, grid.mY + GRID_SIZE * 0.5f*0.9f 
 //Chars
 #define NORMAL    'o'
 #define MUD       'S'

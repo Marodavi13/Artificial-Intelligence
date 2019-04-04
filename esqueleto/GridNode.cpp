@@ -39,7 +39,7 @@ float CGridNode::GetCostToNeightbour(const CNode * neighbour, USVec2D startLocat
 {
    const CGridNode* gridNeighbour = static_cast<const CGridNode*>(neighbour);
    //To make the movement more realistic, we make diagonals with more cost (sqrt(2)) than straights (1)
-   return gridNeighbour->mCost * GetNodeLocation().Dist(gridNeighbour->GetNodeLocation()/GRID_SIZE);
+   return gridNeighbour->mCost * GetNodeLocation().Dist(gridNeighbour->GetNodeLocation());
 }
 
 void CGridNode::DrawDebug() const
@@ -136,6 +136,7 @@ void CGridNode::DrawFill(const  USVec2D& nodeCenter) const
     }
     //MOAIDraw::DrawRectFill(GRID_RECT(nodeCenter));
     MOAIDraw::DrawRectOutline(GRID_RECT(nodeCenter));
+   
 
 }
 

@@ -73,7 +73,7 @@ void Pathfinder::UpdatePath()
 
     //get starting node
     const CNode* node = CNode::GetNodeFromLocation(mStartPosition, mMap);
-    if (node && mEndNode && mCharacter!= nullptr)
+    if (node && mEndNode && mCharacter != nullptr)
     {
         mCharacter->mPath.clear();
         mCharacter->mNumberOfPathPoints = 0;
@@ -83,34 +83,48 @@ void Pathfinder::UpdatePath()
         {
             //Get the next node to travel from with min cost
             CPathNode* currentPathNode = GetNodeWithMinCost();
-            
             //As we are visiting all his neighbours we erase it from openlist, and introduce it into the closed list 
             mOpenMap.erase(currentPathNode->mNode);
-            //If it is already in the closed list, we have already reached it with minimum cost
-            if (mClosedMap.count(currentPathNode->mNode) == 0)
+            mClosedMap[currentPathNode->mNode] = currentPathNode;
+            if (currentPathNode->mNode == mEndNode)
             {
-                mClosedMap[currentPathNode->mNode] = currentPathNode;
-                if(currentPathNode->mNode == mEndNode)
+                break;
+            }
+            for (CGridNode* neighbour : static_cast<const CGridNode*>(currentPathNode->mNode)->mNeighbours)
+            {
+                if (mClosedMap.count(neighbour))
                 {
-                    break;
                 }
-                for (CGridNode* neighbour : static_cast<const CGridNode*>(currentPathNode->mNode)->mNeighbours)
+                else
                 {
                     //Calculate the current cost of the path
                     float currentScore = currentPathNode->mCurrentScore + currentPathNode->mNode->GetCostToNeightbour(neighbour);
                     //add an stimation based on distance with cost 1
                     float totalScore = currentScore + neighbour->GetNodeLocation().Dist(mEndNode->GetNodeLocation());
                     CPathNode* nextPathNode = new CPathNode(neighbour, currentPathNode->mNode, currentScore, totalScore);
+
                     //Add it to the open map
-                    mOpenMap[nextPathNode->mNode] = nextPathNode;
+                    if (mOpenMap.count(neighbour))
+                    {
+                        if (currentScore < mOpenMap.find(neighbour)->second->mCurrentScore)
+                        {
+                            mOpenMap[neighbour] = nextPathNode;
+                        }
+                    }
+                    else
+                    {
+                        mOpenMap[neighbour] = nextPathNode;
+
+                    }
                 }
             }
         }
+
         //if I have reached the end
         if (mClosedMap.count(mEndNode))
         {
-            const CNode* parent = mClosedMap.find(mEndNode)->second->mParent;
-            while(parent)
+            const CNode* parent = mClosedMap.find(mEndNode)->second->mNode;
+            while (parent)
             {
                 mCharacter->mPath.insert(mCharacter->mPath.begin(), parent->GetNodeLocation());
                 ++mCharacter->mNumberOfPathPoints;
@@ -118,8 +132,6 @@ void Pathfinder::UpdatePath()
             }
         }
     }
-
-
 }
 
 CPathNode * Pathfinder::GetNodeWithMinCost()

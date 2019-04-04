@@ -27,7 +27,7 @@ public:
 
     void SetStartPosition(float x, float y) { 
         mStartPosition = USVec2D(x, y);/* UpdatePath(); */}
-    void SetEndPosition(float x, float y) { mEndPosition = USVec2D(x, y); if (mEndNode) mEndNode->bIsEndNode = false; mEndNode = CNode::GetNodeFromLocation(mEndPosition, mMap); mEndNode->bIsEndNode = true; UpdatePath(); }
+    void SetEndPosition(float x, float y) { mEndPosition = USVec2D(x, y); mEndNode = CNode::GetNodeFromLocation(mEndPosition, mMap); UpdatePath(); }
     const USVec2D& GetStartPosition() const { return mStartPosition; }
     const USVec2D& GetEndPosition() const { return mEndPosition; }
 
